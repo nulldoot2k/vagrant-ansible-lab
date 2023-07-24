@@ -12,7 +12,7 @@ sed -e '/^.*ubuntu-jammy.*/d' -i /etc/hosts
 sed -e "/^.*$2.*/d" -i /etc/hosts
 
 # Update /etc/hosts about other hosts
-cat >> /etc/hosts <EOF
+cat << EOF > /etc/hosts
 127.0.0.1 localhost
 127.0.1.1 vagrant
 ::1     ip6-localhost ip6-loopback

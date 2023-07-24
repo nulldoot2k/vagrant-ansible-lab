@@ -22,6 +22,21 @@ Vagrant.configure("2") do |config|
     SHELL
   end
   
+  # Node
+  (1..NodeCount).each do |i|
+    config.vm.define "node#{i}" do |node|
+      node.vm.box = "bento/ubuntu-20.04"
+      node.vm.hostname = "node#{i}"
+      node.vm.network :private_network, ip: IP_IW + "#{NodeScale + i}"
+      node.vm.network :forwarded_port, guest: 22, host: "#{2200 + i}", id: "ssh"
+      node.vm.provider :virtualbox do |vb|
+        vb.memory = 512
+        vb.cpus = 1
+      end
+      setup_dns node
+    end
+  end
+
   # Control
   (1..NodeControllCount).each do |i|
     config.vm.define "control" do |control|
@@ -43,18 +58,4 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  # Node
-  (1..NodeCount).each do |i|
-    config.vm.define "node#{i}" do |node|
-      node.vm.box = "bento/ubuntu-20.04"
-      node.vm.hostname = "node#{i}"
-      node.vm.network :private_network, ip: IP_IW + "#{NodeScale + i}"
-      node.vm.network :forwarded_port, guest: 22, host: "#{2200 + i}", id: "ssh"
-      node.vm.provider :virtualbox do |vb|
-        vb.memory = 512
-        vb.cpus = 1
-      end
-      setup_dns node
-    end
-  end
 end

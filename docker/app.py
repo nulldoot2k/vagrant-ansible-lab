@@ -3,7 +3,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/hello')
 def hello():
     hostname = socket.gethostname()
     return 'Hello World! I am {}\n'.format(hostname)

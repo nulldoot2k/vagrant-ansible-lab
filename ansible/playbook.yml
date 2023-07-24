@@ -1,3 +1,4 @@
+---
 - hosts: nodes
   become: yes
   tasks:
